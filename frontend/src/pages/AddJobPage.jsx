@@ -39,7 +39,7 @@ const AddJobPage = () => {
       });
 
       if (response.ok) {
-        navigate('/jobs'); // Redirect to jobs list on success
+        navigate('/'); // Redirect to jobs list on success
       } else {
         console.error('Failed to add job:', response.status);
         // Optionally, display an error message to the user

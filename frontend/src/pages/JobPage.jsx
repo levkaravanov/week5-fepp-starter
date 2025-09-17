@@ -6,8 +6,37 @@ const JobPage = () => {
   const [job, setJob] = useState(null);
   const navigate = useNavigate();
 
-  const deleteJob = async () => {
-    console.log(JobPage);
+  useEffect(() => {
+    const fetchJob = async () => {
+      try {
+        const response = await fetch(`/api/jobs/${id}`, {
+          method: 'GET',
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setJob(data);
+        }
+      } catch (error) {
+        console.error('Error fetching job:', error);
+      }
+    };
+    fetchJob();
+  }, [id]);
+
+  const deleteJob = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`/api/jobs/${id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        navigate('/jobs');
+      } else {
+        console.error('Failed to delete job:', response.status);
+      }
+    } catch (error) {
+      console.error('Error deleting job:', error);
+    }
   };
 
   if (!job) {

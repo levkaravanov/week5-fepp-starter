@@ -4,6 +4,22 @@ import { useEffect, useState } from "react";
 const Home = () => {
   const [jobs, setJobs] = useState([]);
 
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await fetch('/api/jobs');
+        if (response.ok) {
+          const data = await response.json();
+          setJobs(data);
+        }
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
+    };
+
+    fetchJobs();
+  }, []);
+
   return (
     <div className="home">
       <div className="job-list">
