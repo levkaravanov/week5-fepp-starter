@@ -13,9 +13,41 @@ const AddJobPage = () => {
 
   const navigate = useNavigate();
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
     console.log("AddJobPage");
+    const jobData = {
+      title: title,
+      type: type,
+      description: description,
+      company: {
+        name: companyName,
+        contactEmail: contactEmail,
+        contactPhone: contactPhone
+      },
+      location: location,
+      salary: Number(salary)
+    };
+
+    try {
+      const response = await fetch('/api/jobs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jobData)
+      });
+
+      if (response.ok) {
+        navigate('/jobs'); // Redirect to jobs list on success
+      } else {
+        console.error('Failed to add job:', response.status);
+        // Optionally, display an error message to the user
+      }
+    } catch (error) {
+      console.error('Error adding job:', error);
+      // Optionally, display an error message to the user
+    }
   };
 
   return (
