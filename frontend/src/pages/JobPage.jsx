@@ -30,7 +30,7 @@ const JobPage = () => {
         method: 'DELETE',
       });
       if (response.ok) {
-        navigate('/jobs');
+        navigate('/');
       } else {
         console.error('Failed to delete job:', response.status);
       }
